@@ -1,0 +1,8 @@
+---
+applications:
+- name: sample-ui-martez
+random-route: true
+instances: 1
+memory: 256M
+services:
+- myDiscoveryService

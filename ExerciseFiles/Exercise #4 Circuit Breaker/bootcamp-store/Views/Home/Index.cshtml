@@ -1,0 +1,26 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="jumbotron">
+    <div class="container">
+        <h1>Bootcamp Store</h1>
+        <h2>Welcome to the Bootcamp Store please see a listing of products below</h2>
+    </div>
+</div>
+<div class="container">
+    <h2>Products</h2>
+    @if (ViewData["Products"] is string[] products)
+    {
+        foreach (var product in products)
+        {
+            <div class="row">
+                <div class="col-xs-12">
+                    <ul>
+                        <li>@product</li>
+                    </ul>
+                </div>
+            </div>
+        }
+    }
+</div>
