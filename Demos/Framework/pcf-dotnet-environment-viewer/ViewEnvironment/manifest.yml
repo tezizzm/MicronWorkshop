@@ -1,0 +1,7 @@
+---
+applications:
+- name: dotnetMicron
+  random-route: true
+  memory: 1024m
+  stack: windows2012R2
+  buildpack: hwc_buildpack
