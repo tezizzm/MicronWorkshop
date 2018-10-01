@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using bootcamp_store.Service;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Pivotal.Discovery.Client;
-using Steeltoe.Extensions.Configuration;
+using Steeltoe.CircuitBreaker.Hystrix;
+using Steeltoe.Management.CloudFoundry;
 
 namespace bootcamp_store
 {
@@ -33,9 +30,14 @@ namespace bootcamp_store
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.AddHystrixCommand<ProductService>("ProductService", Configuration);
 
+            //services.AddTransient<IProductService, ProductService>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddDiscoveryClient(Configuration);
+
+            services.AddHystrixMetricsStream(Configuration);
+            services.AddCloudFoundryActuators(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,6 +53,7 @@ namespace bootcamp_store
                 app.UseHsts();
             }
 
+            app.UseHystrixRequestContext();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
@@ -61,6 +64,8 @@ namespace bootcamp_store
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+            app.UseHystrixMetricsStream();
+            app.UseCloudFoundryActuators();
         }
     }
 }

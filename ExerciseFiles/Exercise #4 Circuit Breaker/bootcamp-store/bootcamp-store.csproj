@@ -7,8 +7,13 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Pivotal.Discovery.ClientCore" Version="2.1.0" />
+    <PackageReference Include="RabbitMQ.Client" Version="5.1.0" />
+    <PackageReference Include="Steeltoe.CircuitBreaker.Hystrix.MetricsStreamCore" Version="2.1.0" />
+    <PackageReference Include="Steeltoe.CircuitBreaker.HystrixCore" Version="2.1.0" />
     <PackageReference Include="Steeltoe.Discovery.ClientCore" Version="2.1.0" />
     <PackageReference Include="Steeltoe.Extensions.Configuration.CloudFoundryCore" Version="2.1.0" />
+    <PackageReference Include="Steeltoe.Extensions.Logging.DynamicLogger" Version="2.1.0" />
+    <PackageReference Include="Steeltoe.Management.CloudFoundryCore" Version="2.1.0" />
   </ItemGroup>
 
 </Project>

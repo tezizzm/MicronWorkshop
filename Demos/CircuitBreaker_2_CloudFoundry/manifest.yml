@@ -1,0 +1,20 @@
+﻿---
+applications:
+- name: martezHystrixfortuneService
+  path: .\Fortune-Teller-Service\publish
+  memory: 128M
+  buildpack: dotnet_core_buildpack
+  env:
+    ASPNETCORE_ENVIRONMENT: Production
+  services:
+   - myDiscoveryService
+   
+- name: martezHystrixFortuneUI
+  path: \Fortune-Teller-UI\publish
+  memory: 128M
+  buildpack: dotnet_core_buildpack
+  env:
+    ASPNETCORE_ENVIRONMENT: Production
+  services:
+    - myDiscoveryService
+    - myHystrixService

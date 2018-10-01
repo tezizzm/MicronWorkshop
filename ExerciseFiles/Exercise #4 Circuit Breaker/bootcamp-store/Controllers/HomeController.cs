@@ -1,35 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Net.Http;
+﻿using System.Diagnostics;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using bootcamp_store.Models;
-using Steeltoe.Common.Discovery;
+using bootcamp_store.Service;
+using Microsoft.Extensions.Logging;
 
 namespace bootcamp_store.Controllers
 {
     public class HomeController : Controller
     {
-        //private static HttpClient client = new HttpClient();
-        DiscoveryHttpClientHandler handler;
+        private readonly ProductService _productService;
+        private readonly ILogger<HomeController> _logger;
 
-        public HomeController(IDiscoveryClient client)
+        public HomeController(ProductService productService, ILogger<HomeController> logger)
         {
-            handler = new DiscoveryHttpClientHandler(client);
+            _productService = productService;
+            _logger = logger;
         }
 
         public async Task<IActionResult> Index()
         {
-            var client = new HttpClient(handler, false);
-            var result = await client.GetAsync("https://core-cf-microservice-martez/api/products");
-            var products = await result.Content.ReadAsAsync<string[]>();
-            ViewData["products"] = products;
-            foreach (var product in products)
-            {
-                System.Console.WriteLine(product);
-            }
+            ViewData["products"] = await _productService.RetrieveProducts();
+            _logger.LogDebug("Retrieved Products");
             return View();
         }
 

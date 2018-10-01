@@ -1,0 +1,19 @@
+﻿---
+applications:
+- name: martezFortuneService
+  memory: 128M
+  path: .\Fortune-Teller-Service\publish
+  buildpack: dotnet_core_buildpack
+  env:
+    ASPNETCORE_ENVIRONMENT: Development
+  services:
+   - myDiscoveryService
+   
+- name: martezFirstFortuneUI
+  memory: 128M
+  path: \Fortune-Teller-UI\publish
+  buildpack: dotnet_core_buildpack
+  env:
+    ASPNETCORE_ENVIRONMENT: Development
+  services:
+    - myDiscoveryService
